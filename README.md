@@ -16,3 +16,39 @@ This project uses an **imperative-to-declarative flow** to automate Kubernetes d
 ├── config.sample.yml    # Configuration template for global settings
 ├── main.yml             # Main playbook entry point
 └── README.md            # Documentation
+
+🛠️ Quick Start
+1. Prerequisites
+Control node with Ansible installed.
+
+SSH key-based access is configured for all target nodes.
+
+2. Configuration
+Copy the sample files to create your active configuration:
+
+cp inventory.sample.yml inventory.ini
+cp config.sample.yml config.yml
+
+3. Execution
+Run the playbook to deploy your cluster:
+
+ansible-playbook -i inventory.yml main.yml
+
+💡 How it works (kubeadm process)
+Idempotent Preparation: Ensures OS-level dependencies (containerd, sysctl settings) are consistent across all nodes.
+
+Control Plane Bootstrap: The Master node initializes the API server, controller manager, and scheduler, generating secure certificates.
+
+Dynamic Join: The playbook automatically captures the join token from the master node and injects it into the worker nodes for a seamless "Zero-Touch" experience.
+
+🔮 Future Roadmap
+[ ] Integrate Ceph storage cluster for persistent storage.
+
+[ ] Add automated health checks post-deployment.
+
+[ ] Implement High Availability (HA) master support.
+
+🛡️ License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+© 2026 [Hassan Aloshari]
