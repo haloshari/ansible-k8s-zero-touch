@@ -130,8 +130,6 @@ ansible-k8s-zero-touch/
 ├── inventory.sample.ini            # Inventory template
 ├── config.sample.yml               # Configuration template
 ├── main.yml                        # Main playbook entry point
-├── group_vars/                     # Group-level variables
-├── host_vars/                      # Host-level variables
 ├── CONTRIBUTING.md                 # Contribution guidelines
 ├── LICENSE                         # MIT License
 └── README.md                       # This file
