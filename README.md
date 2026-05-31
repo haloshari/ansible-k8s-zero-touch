@@ -54,39 +54,51 @@ cd ansible-k8s-zero-touch
 Copy sample files and customize for your environment:
 
 ```bash
-cp inventory.sample.yml inventory.yml
+cp inventory.sample.yml inventory.ini
 cp config.sample.yml config.yml
 ```
 
-Edit `inventory.yml` with your node hostnames/IPs:
+Edit `inventory.ini` with your node hostnames/IPs:
 
 ```yaml
-all:
-  children:
-    master:
-      hosts:
-        k8s-master:
-          ansible_host: 192.168.1.10
-    workers:
-      hosts:
-        k8s-worker-1:
-          ansible_host: 192.168.1.11
-        k8s-worker-2:
-          ansible_host: 192.168.1.12
+[master]
+master01 ansible_host=YOUR_MASTER_NODE_IP
+
+[workers]
+node01 ansible_host=YOUR_NODE01_IP
+node02 ansible_host=YOUR_NODE02_IP
+
+..... You can add more workers
+
+[kube_cluster:vars]
+ansible_user=root
+ansible_ssh_private_key_file=~/.ssh/id_rsa
+
+[kube_cluster:children]
+master
+workers
+
 ```
 
 Edit `config.yml` with your cluster settings:
 
 ```yaml
 ---
-kubernetes:
-  version: "1.28.0"
-  cluster_name: "my-cluster"
-  pod_network_cidr: "10.244.0.0/16"
-  
-container_runtime:
-  type: "containerd"
-  version: "1.7.0"
+# Kubernetes version release (e.g., "1.28", "1.29", "1.30")
+# your preferred version release
+k8s_release: "1.29"
+
+# Pod Network CIDR (Must match your CNI plugin's requirements)
+# Calico default is usually 192.168.0.0/16, Flannel is usually 10.244.0.0/16
+# Make sure this does not conflict with your host network!
+pod_network_cidr: "172.10.0.0/16"
+
+# CNI Plugin Manifest URL
+# Calico: https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+# Flannel: https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+# The URL of your preferred CNI plugin manifest
+cni_manifest_url: "https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml"
+
 ```
 
 ### 3. Deploy the Cluster
@@ -145,8 +157,8 @@ ansible-k8s-zero-touch/
 
 3. Worker Join Phase (Worker Nodes)
    ├── Retrieve join token from master
-   ├── Execute kubeadm join command
-   ├── Kubelet starts and registers with control plane
+   ├── Execute the kubeadm join command
+   ├── Kubelet starts and registers with the control plane
    └── Node becomes ready for workload scheduling
 ```
 
@@ -163,26 +175,12 @@ ansible-k8s-zero-touch/
 
 | Variable | Purpose | Default |
 |----------|---------|---------|
-| `kubernetes.version` | Kubernetes version to deploy | `1.28.0` |
+| `kubernetes.version` | Kubernetes version to deploy | `1.29.0` |
 | `kubernetes.cluster_name` | Cluster identifier | `k8s-cluster` |
 | `kubernetes.pod_network_cidr` | Pod network CIDR range | `10.244.0.0/16` |
 | `container_runtime.type` | Container runtime | `containerd` |
 | `container_runtime.version` | Runtime version | `1.7.0` |
 
-### Inventory Variables
-
-```yaml
-master:
-  vars:
-    ansible_user: ubuntu
-    ansible_become: yes
-    ansible_become_method: sudo
-
-workers:
-  vars:
-    ansible_user: ubuntu
-    ansible_become: yes
-```
 
 ## 🐛 Troubleshooting
 
@@ -191,7 +189,8 @@ workers:
 **Solution:** Check kubelet logs and ensure network plugin is installed:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+
 ```
 
 ### Issue: SSH connection timeouts
@@ -199,7 +198,7 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 **Solution:** Verify SSH access and key configuration:
 
 ```bash
-ssh -i your-key.pem ubuntu@node-ip "sudo whoami"
+ssh -i your-key.pem username@node-ip "sudo whoami"
 ```
 
 ### Issue: Swap not disabled
@@ -211,7 +210,7 @@ sudo swapoff -a
 sudo sed -i '/ swap / s/^/#/' /etc/fstab
 ```
 
-## 🗺️ Roadmap
+## 🗺️ Next Steps
 
 - [ ] High Availability (HA) control plane support
 - [ ] Automated backup and recovery
