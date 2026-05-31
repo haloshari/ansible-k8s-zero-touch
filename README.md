@@ -41,12 +41,13 @@ Control Plane Bootstrap: The Master node initializes the API server, controller 
 
 Dynamic Join: The playbook automatically captures the join token from the master node and injects it into the worker nodes for a seamless "Zero-Touch" experience.
 
-🔮 Future Roadmap
-[ ] Integrate Ceph storage cluster for persistent storage.
+🔮 Future Roadmap: 
 
-[ ] Add automated health checks post-deployment.
+- Integrate Ceph storage cluster for persistent storage.
 
-[ ] Implement High Availability (HA) master support.
+- Add automated health checks post-deployment.
+
+- Implement High Availability (HA) master support.
 
 🛡️ License
 This project is licensed under the MIT License. See the LICENSE file for details.
