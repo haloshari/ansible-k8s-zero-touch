@@ -16,7 +16,7 @@ This project uses an **imperative-to-declarative flow** to automate Kubernetes d
 ├── config.sample.yml    # Configuration template for global settings
 ├── main.yml             # Main playbook entry point
 └── README.md            # Documentation
-
+```
 🛠️ Quick Start
 1. Prerequisites
 Control node with Ansible installed.
@@ -25,15 +25,15 @@ SSH key-based access is configured for all target nodes.
 
 2. Configuration
 Copy the sample files to create your active configuration:
-
+```
 cp inventory.sample.yml inventory.ini
 cp config.sample.yml config.yml
-
+```
 3. Execution
 Run the playbook to deploy your cluster:
-
+```
 ansible-playbook -i inventory.yml main.yml
-
+```
 💡 How it works (kubeadm process)
 Idempotent Preparation: Ensures OS-level dependencies (containerd, sysctl settings) are consistent across all nodes.
 
