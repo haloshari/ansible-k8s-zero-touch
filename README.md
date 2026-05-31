@@ -105,7 +105,7 @@ cni_manifest_url: "https://raw.githubusercontent.com/projectcalico/calico/v3.26.
 ### 3. Deploy the Cluster
 
 ```bash
-ansible-playbook -i inventory.yml main.yml
+ansible-playbook -i inventory.ini main.yml
 ```
 
 Monitor the deployment progress. Successful execution will show the control plane and worker nodes joining the cluster.
@@ -127,7 +127,7 @@ ansible-k8s-zero-touch/
 │   ├── container_runtime/          # Containerd installation and configuration
 │   ├── kubernetes/                 # Kubernetes components installation
 │   └── network/                    # CNI plugin configuration
-├── inventory.sample.yml            # Inventory template
+├── inventory.sample.ini            # Inventory template
 ├── config.sample.yml               # Configuration template
 ├── main.yml                        # Main playbook entry point
 ├── group_vars/                     # Group-level variables
@@ -174,13 +174,13 @@ ansible-k8s-zero-touch/
 
 ### Main Configuration (config.yml)
 
+
 | Variable | Purpose | Default |
 |----------|---------|---------|
-| `kubernetes.version` | Kubernetes version to deploy | `1.29.0` |
-| `kubernetes.cluster_name` | Cluster identifier | `k8s-cluster` |
-| `kubernetes.pod_network_cidr` | Pod network CIDR range | `10.244.0.0/16` |
-| `container_runtime.type` | Container runtime | `containerd` |
-| `container_runtime.version` | Runtime version | `1.7.0` |
+| `k8s_release` | Kubernetes version to deploy | `"1.29"` |
+| `pod_network_cidr` | Pod network CIDR range | `"172.10.0.0/16"` |
+| `cni_manifest_url` | URL for the CNI plugin manifest | Calico v3.26.1 URL |
+| `container_runtime_type` | Container runtime (if applicable) | `"containerd"` |
 
 
 ## 🐛 Troubleshooting
