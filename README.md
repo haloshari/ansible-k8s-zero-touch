@@ -5,7 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![GitHub Release](https://img.shields.io/github/v/release/haloshari/ansible-k8s-zero-touch?style=flat)](https://github.com/haloshari/ansible-k8s-zero-touch/releases)
 
-A production-ready, modular Ansible automation framework for deploying highly available Kubernetes clusters using `kubeadm`. This project eliminates manual configuration through variable-driven Ansible roles, enabling a truly "Zero-Touch" deployment experience.
+A production-ready, modular Ansible automation framework for deploying highly available Kubernetes clusters using `kubeadm`.
+This project eliminates manual configuration through variable-driven Ansible roles, enabling a truly "Zero-Touch" deployment experience.
 
 ## 🎯 Features
 
