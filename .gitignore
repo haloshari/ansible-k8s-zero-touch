@@ -1,8 +1,14 @@
-# Sensitive files
+# Ignore inventory files that contain sensitive info
 inventory.ini
-config.yml
-*.retry
 
-# System/Temp files
+# Ignore local configuration files
+config.yml
+
+# Ignore IDE/OS specific files
+.vscode/
+.idea/
+*.swp
 .DS_Store
-.tmp
+
+# Ignore Ansible artifacts
+*.retry
