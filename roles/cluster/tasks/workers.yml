@@ -1,0 +1,18 @@
+---
+- name: Fetch Join Command from Master
+  shell: cat /tmp/kubeadm_join.sh
+  register: join_command
+  delegate_to: "{{ groups['master'][0] }}"
+
+- name: Copy Join Command to Worker Nodes
+  copy:
+    content: "{{ join_command.stdout }}"
+    dest: /tmp/kubeadm_join.sh
+    mode: '0700'
+
+- name: Execute Join Command on Workers
+# Developed by [Hassan Aloshari]
+  shell: bash /tmp/kubeadm_join.sh
+  args:
+    executable: /bin/bash
+    creates: /etc/kubernetes/kubelet.conf

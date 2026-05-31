@@ -1,0 +1,43 @@
+---
+- name: Install Containerd
+# Developed by [Hassan Aloshari]
+  apt:
+    name: containerd
+    state: present
+    update_cache: yes
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+    UCF_FORCE_CONFFOLD: "YES"
+
+- name: Configure Containerd
+# Developed by [Hassan Aloshari]
+  shell: |
+    mkdir -p /etc/containerd
+    containerd config default | tee /etc/containerd/config.toml
+    sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+    systemctl restart containerd
+    systemctl enable containerd
+  args:
+    creates: /etc/containerd/config.toml
+
+- name: Add Kubernetes Repository
+  shell: |
+    mkdir -p -m 755 /etc/apt/keyrings
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v{{ k8s_release }}/deb/Release.key | gpg --dearmor --yes -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v{{ k8s_release }}/deb/ /" | tee /etc/apt/sources.list.d/kubernetes.list
+    apt-get update -y
+  args:
+    creates: /etc/apt/sources.list.d/kubernetes.list
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+
+- name: Install Kubernetes Components
+  apt:
+    name:
+      - kubelet
+      - kubeadm
+      - kubectl
+    state: present
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+    UCF_FORCE_CONFFOLD: "YES"

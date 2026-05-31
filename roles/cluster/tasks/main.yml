@@ -1,0 +1,8 @@
+- import_tasks: master.yml
+# Developed by [Hassan Aloshari]
+  when: "'master' in group_names"
+
+- import_tasks: workers.yml
+# Developed by [Hassan Aloshari]
+  when: "'workers' in group_names"
+

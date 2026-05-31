@@ -1,0 +1,17 @@
+---
+# ------------------------------------------------------------------
+# Project: Ansible Kubernetes Zero-Touch Deployment
+# Author:  [Hassan Aloshari]
+# GitHub:  https://github.com/haloshari/ansible-k8s-zero-touch
+# License: MIT
+# ------------------------------------------------------------------
+- name: Setup Kubernetes Cluster
+  hosts: kube_cluster
+  become: yes
+  vars_files:
+    - config.yml 
+
+  roles:
+    - prerequisites
+    - tools
+    - cluster
