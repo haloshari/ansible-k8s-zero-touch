@@ -55,7 +55,7 @@ cd ansible-k8s-zero-touch
 Copy sample files and customize for your environment:
 
 ```bash
-cp inventory.sample.yml inventory.ini
+cp inventory.sample.ini inventory.ini
 cp config.sample.yml config.yml
 ```
 
