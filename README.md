@@ -233,9 +233,6 @@ Contributions are welcome! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for 
 6. Push to the branch (`git push origin feature/amazing-feature`)
 7. Open a Pull Request
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
 ## 👤 Author
 
