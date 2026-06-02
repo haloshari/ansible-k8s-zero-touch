@@ -8,6 +8,12 @@
 A production-ready, modular Ansible automation framework for deploying highly available Kubernetes clusters using `kubeadm`.
 This project eliminates manual configuration through variable-driven Ansible roles, enabling a truly "Zero-Touch" deployment experience.
 
+## 📺 Video Walkthrough & Demo
+
+Watch the complete step-by-step video guide explaining how to clone the repository, configure your on-premises environment, and execute the playbooks to stand up your cluster in under 4 minutes:
+
+▶️ **[Zero-Touch Kubernetes Deployment with Ansible | Under 4 Minutes 🚀](https://youtu.be/zyvuK-5UYtY)**
+
 ## 🎯 Features
 
 - ✅ **Fully Automated** - Minimal manual intervention required
